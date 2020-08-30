@@ -45,22 +45,22 @@ app.get('/test', function (req, res) {
 })
 
 
-// // API Variables
-// const key = process.env.API_KEY;
-// const baseURL = 'https://api.meaningcloud.com/sentiment-2.1';
-// const model = 'general';
-// const language = 'en';
+// API Variables
+const key = process.env.API_KEY;
+const baseURL = 'https://api.meaningcloud.com/sentiment-2.1';
+const model = 'general';
+const language = 'en';
 
-// app.get('/analyse/:text', (req, res) => {
-//   const userText = req.params.text;
-//   console.log(userText)
-//   fetch(`${baseURL}?key=${key}&of=json&txt=${userText}.&model=${model}&lang=${language}`)
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log(data)
-//       res.send(data)
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     })
-// })
+app.get('/analyse/:text', (req, res) => {
+  const userText = req.params.text;
+  console.log(userText)
+  fetch(`${baseURL}?key=${key}&of=json&txt=${userText}.&model=${model}&lang=${language}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
