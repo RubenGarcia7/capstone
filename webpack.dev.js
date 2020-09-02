@@ -12,6 +12,9 @@ module.exports = {
         libraryTarget: 'var',
         library: 'Client'
     },
+    devServer: {
+        port: 8082
+    },
     mode: 'development',
     devtool: 'source-map',
     stats: 'verbose',

@@ -188,7 +188,7 @@ span {
 
       &-box {
         text-align: left;
-        
+
 
         &:not(:last-child) {
           margin-right: 1rem;
@@ -199,15 +199,15 @@ span {
         }
 
         & input {
-          font-size: 1.8rem;
+          font-size: 1.6rem;
           border-radius: .5rem;
           border: 1px solid #333;
-          
+
 
           &[type=text],
           &[type=date] {
             padding: 1.2rem 0 1.2rem 1.5rem;
-            width: 100%;
+            min-width: 15rem;
           }
 
           &[type=submit] {
@@ -217,9 +217,17 @@ span {
           }
         }
 
-        
+        select {
+          font-size: 1.4rem;
+          border-radius: .5rem;
+          border: 1px solid #333;
+          padding: 1.2rem 0 1.2rem 1.5rem;
+          min-width: 15rem;
+        }
+
+
       }
-      
+
     }
   }
 }
@@ -237,9 +245,7 @@ span {
     &__left {
       width: 50%;
 
-      &-timer {
-        
-      }
+      &-timer {}
     }
 
     &__right {
@@ -254,11 +260,27 @@ span {
         &__date {
           color: #aaa;
           font-size: 1.6rem;
+          margin-top: .3rem;
         }
 
-        &__temperature {
-          font-size: 2.8rem;
-          margin-top: 1.5rem;
+        &__img {
+          width: 6rem;
+        }
+
+        &__maxtemp,
+        &__mintemp {
+          display: inline-block;
+          font-size: 1.6rem;
+
+        }
+
+        &__maxtemp {
+          margin-right: 1.5rem;
+        }
+
+        &__mintemp {
+          margin-right: .7rem;
+          color: #aaa;
         }
       }
     }
