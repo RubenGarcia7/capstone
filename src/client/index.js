@@ -13,6 +13,7 @@ const form = document.getElementById('form');
 // UI Elements
 const countdownUI = document.getElementById('countdown');
 const cityUI = document.getElementById('city-span');
+
 const weatherCity = document.getElementById('weather-city');
 const weatherDate = document.getElementById('weather-date');
 const weatherTitle = document.getElementById('weather-title');
@@ -20,12 +21,13 @@ const weatherMaxTemp = document.getElementById('weather-maxtemp');
 const weatherMinTemp = document.getElementById('weather-mintemp');
 const weatherImg = document.getElementById('weather-img');
 const cityImg = document.getElementById('city-img');
+const weatherDurHeading = document.getElementById('weather-dur-heading');
+const weatherDurValue = document.getElementById('weather-dur-value');
 
 
 // Other Global Variables
 let differenceDays;
-let city;
-
+let tripDuration;
 
 document.addEventListener('submit', performAction);
 
@@ -45,7 +47,10 @@ function performAction(event) {
   getCityData(userCountry, userDestination, userDateDepart)
     .then(geoData => getWeatherData(geoData, userDateDepart))
     .then(newData => getImgData(newData));
+
+  updateDuration(userDateDepart, userDateReturn);
 }
+
 
 const getWeatherData = async (geoData, userDateDepart) => {
   console.log(geoData);
@@ -74,7 +79,7 @@ const getWeatherData = async (geoData, userDateDepart) => {
     console.log(`Something went wrong: ${error}`);
   }
 
-}
+};
 
 // Fetch text data from API
 export const getCityData = async (userCountry, userDestination, userDateDepart) => {
@@ -85,14 +90,14 @@ export const getCityData = async (userCountry, userDestination, userDateDepart) 
 
     // Update UI
     cityUI.innerHTML = data.geonames[0].name;
-    countdownUI.innerHTML = differenceDays;
+  
 
     return data;
 
   } catch (error) {
     console.log(`Something went wrong: ${error}`);
   }
-}
+};
 
 const getImgData = async (newData) => {
 
@@ -116,7 +121,7 @@ const getImgData = async (newData) => {
     console.log(`Something went wrong: ${error}`);
   }
 
-}
+};
 
 
 // Validate Form
@@ -148,5 +153,27 @@ function createCountdown(userDateDepart, userDestination) {
   if (differenceDays <= 0) {
     alert('Please select a future date');
     return;
+  } else if (differenceDays === 1) {
+    countdownUI.innerHTML = `${differenceDays} day left`
+  } else {
+    countdownUI.innerHTML = `${differenceDays} days left`
   }
+
+  
+}
+
+// Update Trip Duration
+function updateDuration(userDateDepart, userDateReturn) {
+
+  const userDateDepartFormatted = new Date(userDateDepart);
+
+  const userDateReturnFormatted = new Date(userDateReturn);
+
+  const differenceDurMs = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
+
+  const differenceDurDays = (differenceDurMs / 1000 / 60 / 60 / 24) + 1;
+
+  weatherDurHeading.style.display = 'block';
+
+  weatherDurValue.innerHTML = differenceDurDays + ' Days';
 }
