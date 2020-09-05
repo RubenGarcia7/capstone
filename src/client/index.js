@@ -26,7 +26,7 @@ const weatherDurValue = document.getElementById('weather-dur-value');
 
 
 // Other Global Variables
-let differenceDays;
+let differenceDaysDep;
 let tripDuration;
 
 document.addEventListener('submit', performAction);
@@ -59,17 +59,17 @@ const getWeatherData = async (geoData, userDateDepart) => {
   try {
     const res = await fetch(`http://localhost:8081/weather/${lat}/${lon}`);
     const data = await res.json();
-    console.log(data)
+    console.log(data.data[differenceDaysDep]);
 
     // Update UI
     const city = data.city_name;
 
     weatherCity.innerHTML = city + ', ' + data.country_code;
     weatherDate.innerHTML = userDateDepart.split('-').reverse().join('/');
-    weatherMaxTemp.innerHTML = data.data[differenceDays].max_temp + '°C';
-    weatherMinTemp.innerHTML = data.data[differenceDays].min_temp + '°C';
-    weatherTitle.innerHTML = data.data[differenceDays].weather.description;
-    weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[differenceDays].weather.icon}.png`
+    weatherMaxTemp.innerHTML = data.data[differenceDaysDep].max_temp + '°C';
+    weatherMinTemp.innerHTML = data.data[differenceDaysDep].min_temp + '°C';
+    weatherTitle.innerHTML = data.data[differenceDaysDep].weather.description;
+    weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[differenceDaysDep].weather.icon}.png`
 
     return data;
 
@@ -133,9 +133,8 @@ function validateForm(userDestination, userDateDepart, userDateReturn) {
   // Get today's date
   const today = new Date();
 
-  // Create data object for the date entered by the user
+  // Create data objects for the dates entered by the user
   const userDateDepartFormatted = new Date(userDateDepart);
-
   const userDateReturnFormatted = new Date(userDateReturn);
 
   // Calculate the time difference in milisecons between now and departure time
@@ -144,19 +143,20 @@ function validateForm(userDestination, userDateDepart, userDateReturn) {
   // Calculate the time difference in milisecons for the duration of the trip
   const differenceMsDur = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
 
-  // Convert the difference to days and round the number
-  differenceDays = Math.ceil(differenceMsDep / 1000 / 60 / 60 / 24);
+  // Convert the difference between now and departure time to days and round the number
+  differenceDaysDep = Math.ceil(differenceMsDep / 1000 / 60 / 60 / 24);
 
+  // Convert the difference for the duration of the trip to days and add 1 to count the return day as part of the trip
   const differenceDaysDur = (differenceMsDur / 1000 / 60 / 60 / 24) + 1;
 
   // Make sure the date entered is in the future
-  if (differenceDays <= 0) {
+  if (differenceDaysDep <= 0) {
     alert('Please select a future date');
     return;
-  } else if (differenceDays === 1) {
-    countdownUI.innerHTML = `${differenceDays} day left`
+  } else if (differenceDaysDep === 1) {
+    countdownUI.innerHTML = `${differenceDaysDep} day left`
   } else {
-    countdownUI.innerHTML = `${differenceDays} days left`
+    countdownUI.innerHTML = `${differenceDaysDep} days left`
   }
 
 
@@ -170,7 +170,6 @@ function validateForm(userDestination, userDateDepart, userDateReturn) {
     weatherDurHeading.style.display = 'block';
     weatherDurValue.innerHTML = differenceDaysDur + ' Days';
   }
-
 }
 
 // // Update Trip Duration
