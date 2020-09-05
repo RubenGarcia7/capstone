@@ -40,15 +40,13 @@ function performAction(event) {
   const userDateReturn = dateReturn.value;
   const userCountry = countryList.value;
 
-  validateForm(userDestination);
-
-  createCountdown(userDateDepart, userDestination);
+  validateForm(userDestination, userDateDepart, userDateReturn);
 
   getCityData(userCountry, userDestination, userDateDepart)
     .then(geoData => getWeatherData(geoData, userDateDepart))
     .then(newData => getImgData(newData));
 
-  updateDuration(userDateDepart, userDateReturn);
+  // updateDuration(userDateDepart, userDateReturn);
 }
 
 
@@ -125,29 +123,31 @@ const getImgData = async (newData) => {
 
 
 // Validate Form
-function validateForm(userDestination) {
+function validateForm(userDestination, userDateDepart, userDateReturn) {
 
   if (userDestination === '' || userDestination === null) {
     alert('Please add your destination');
     return;
-  } else {
-    return true;
-  }
-}
+  } 
 
-// Countdown Timer
-function createCountdown(userDateDepart, userDestination) {
   // Get today's date
   const today = new Date();
 
   // Create data object for the date entered by the user
   const userDateDepartFormatted = new Date(userDateDepart);
 
-  // Calculate the time difference in milisecons
-  const differenceMs = userDateDepartFormatted.getTime() - today.getTime();
+  const userDateReturnFormatted = new Date(userDateReturn);
+
+  // Calculate the time difference in milisecons between now and departure time
+  const differenceMsDep = userDateDepartFormatted.getTime() - today.getTime();
+
+  // Calculate the time difference in milisecons for the duration of the trip
+  const differenceMsDur = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
 
   // Convert the difference to days and round the number
-  differenceDays = Math.ceil(differenceMs / 1000 / 60 / 60 / 24);
+  differenceDays = Math.ceil(differenceMsDep / 1000 / 60 / 60 / 24);
+
+  const differenceDaysDur = (differenceMsDur / 1000 / 60 / 60 / 24) + 1;
 
   // Make sure the date entered is in the future
   if (differenceDays <= 0) {
@@ -159,21 +159,32 @@ function createCountdown(userDateDepart, userDestination) {
     countdownUI.innerHTML = `${differenceDays} days left`
   }
 
-  
+
+  if (differenceDaysDur <= 0) {
+    alert('Please retype your return date');
+    return;
+  } else if (differenceDaysDur === 1) {
+    weatherDurHeading.style.display = 'block';
+    weatherDurValue.innerHTML = differenceDaysDur + ' Day';
+  } else {
+    weatherDurHeading.style.display = 'block';
+    weatherDurValue.innerHTML = differenceDaysDur + ' Days';
+  }
+
 }
 
-// Update Trip Duration
-function updateDuration(userDateDepart, userDateReturn) {
+// // Update Trip Duration
+// function updateDuration(userDateDepart, userDateReturn) {
 
-  const userDateDepartFormatted = new Date(userDateDepart);
+//   const userDateDepartFormatted = new Date(userDateDepart);
 
-  const userDateReturnFormatted = new Date(userDateReturn);
+//   const userDateReturnFormatted = new Date(userDateReturn);
 
-  const differenceDurMs = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
+//   const differenceDurMs = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
 
-  const differenceDurDays = (differenceDurMs / 1000 / 60 / 60 / 24) + 1;
+//   const differenceDurDays = (differenceDurMs / 1000 / 60 / 60 / 24) + 1;
 
-  weatherDurHeading.style.display = 'block';
+//   weatherDurHeading.style.display = 'block';
 
-  weatherDurValue.innerHTML = differenceDurDays + ' Days';
-}
+//   weatherDurValue.innerHTML = differenceDurDays + ' Days';
+// }
