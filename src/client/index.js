@@ -46,7 +46,6 @@ function performAction(event) {
     .then(geoData => getWeatherData(geoData, userDateDepart))
     .then(newData => getImgData(newData));
 
-  // updateDuration(userDateDepart, userDateReturn);
 }
 
 
@@ -171,19 +170,3 @@ function validateForm(userDestination, userDateDepart, userDateReturn) {
     weatherDurValue.innerHTML = differenceDaysDur + ' Days';
   }
 }
-
-// // Update Trip Duration
-// function updateDuration(userDateDepart, userDateReturn) {
-
-//   const userDateDepartFormatted = new Date(userDateDepart);
-
-//   const userDateReturnFormatted = new Date(userDateReturn);
-
-//   const differenceDurMs = userDateReturnFormatted.getTime() - userDateDepartFormatted.getTime();
-
-//   const differenceDurDays = (differenceDurMs / 1000 / 60 / 60 / 24) + 1;
-
-//   weatherDurHeading.style.display = 'block';
-
-//   weatherDurValue.innerHTML = differenceDurDays + ' Days';
-// }
