@@ -224,10 +224,7 @@ span {
           padding: 1.2rem 0 1.2rem 1.5rem;
           min-width: 15rem;
         }
-
-
       }
-
     }
   }
 }
@@ -244,12 +241,20 @@ span {
 
     &__left {
       width: 50%;
+      padding-right: 5rem; 
 
       &-timer {}
+
+      &-img {
+        width: 80%;
+        margin-top: 2rem;
+        border-radius: 5px;
+      }
     }
 
     &__right {
       width: 50%;
+      padding-left: 5rem;
 
       .weather-card {
 
@@ -281,6 +286,10 @@ span {
         &__mintemp {
           margin-right: .7rem;
           color: #aaa;
+        }
+
+        &__duration-heading {
+          
         }
       }
     }

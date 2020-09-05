@@ -46,18 +46,22 @@
       <div class="dashboard__left">
         <h3 class="dashboard__left-heading">Your trip to <span id="city-span"></span></h3>
         <p class="dashboard__left-timer"><span id="countdown"></span> days left</p>
-        <img src="" alt="" class="dashboard__left-img">
+        <img src="" alt="" class="dashboard__left-img  shadow-xs" id="city-img">
       </div>
       <div class="dashboard__right">
         <div id="" class="weather-card">
           <h4 class="weather-card__city" id="weather-city"></h4>
           <p class="weather-card__date" id="weather-date"></p>
           <p class="weather-card__title" id="weather-title"></p>
-          <img src="" alt="" id="weather-img" class="weather-card__img">
+          <div class="">
+            <img src="" alt="" id="weather-img" class="weather-card__img">
+          </div>     
           <div>
             <span class="weather-card__maxtemp" id="weather-maxtemp"></span>
             <span class="weather-card__mintemp" id="weather-mintemp"></span>
           </div>
+          <p class="weather-card__duration-heading">Trip Duration</p>
+          <p class="weather-card__duration-value"></p>
         </div>
       </div>
     </div>

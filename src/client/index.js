@@ -19,10 +19,12 @@ const weatherTitle = document.getElementById('weather-title');
 const weatherMaxTemp = document.getElementById('weather-maxtemp');
 const weatherMinTemp = document.getElementById('weather-mintemp');
 const weatherImg = document.getElementById('weather-img');
+const cityImg = document.getElementById('city-img');
 
 
 // Other Global Variables
 let differenceDays;
+let city;
 
 
 document.addEventListener('submit', performAction);
@@ -42,11 +44,7 @@ function performAction(event) {
 
   getCityData(userCountry, userDestination, userDateDepart)
     .then(geoData => getWeatherData(geoData, userDateDepart))
-    .then(newData => {
-
-    })
-
-
+    .then(newData => getImgData(newData));
 }
 
 const getWeatherData = async (geoData, userDateDepart) => {
@@ -61,7 +59,9 @@ const getWeatherData = async (geoData, userDateDepart) => {
     console.log(data)
 
     // Update UI
-    weatherCity.innerHTML = data.city_name + ', ' + data.country_code;
+    const city = data.city_name;
+
+    weatherCity.innerHTML = city + ', ' + data.country_code;
     weatherDate.innerHTML = userDateDepart.split('-').reverse().join('/');
     weatherMaxTemp.innerHTML = data.data[differenceDays].max_temp + '°C';
     weatherMinTemp.innerHTML = data.data[differenceDays].min_temp + '°C';
@@ -92,6 +92,30 @@ export const getCityData = async (userCountry, userDestination, userDateDepart) 
   } catch (error) {
     console.log(`Something went wrong: ${error}`);
   }
+}
+
+const getImgData = async (newData) => {
+
+  const city = newData.city_name;
+
+  try {
+    const res = await fetch(`http://localhost:8081/img/${city}`);
+    const data = await res.json();
+    console.log(data)
+
+    // Get img url from JSON response
+    const imgURL = data.hits[0].webformatURL;
+    console.log(imgURL);
+
+    // Update UI
+    cityImg.src = imgURL;
+
+    return data;
+
+  } catch (error) {
+    console.log(`Something went wrong: ${error}`);
+  }
+
 }
 
 

@@ -85,4 +85,26 @@ app.get('/weather/:lat/:lon', (req, res) => {
       console.log(err);
     })
 })
-// https://api.weatherbit.io/v2.0/forecast/daily?&lat=38.123&lon=-78.543&key=1f2d42f0a90b42fba4e3b9d3ae15d5a7
+
+// Pixabay API
+app.get('/img/:city', (req, res) => {
+  const pixabayKey = process.env.PIXABAY_KEY;
+  const baseURL = 'https://pixabay.com/api/';
+
+  const city = req.params.city;
+
+  const imgType = 'photo';
+  const orientation = 'horizontal';
+
+  console.log(`${baseURL}?key=${pixabayKey}&q=${city}&image_type=${imgType}&orientation=${orientation}`);
+
+  fetch(`${baseURL}?key=${pixabayKey}&q=${city}&image_type=${imgType}&orientation=${orientation}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
