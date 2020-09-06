@@ -13,7 +13,7 @@
       <h1 class="hero__heading">Where are you going next?</h1>
       <p class="hero__subheading">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi porro sapiente illo
         dolore autem mollitia.</p>
-      <form action="#" class="hero__form" id="form">
+      <form class="hero__form" id="form" onsubmit="return Client.performAction(event)"">
         <div class="hero__form-box">
           <label for="city">Destination</label>
           <input type="text" id="city" placeholder="Name of the city">
@@ -35,7 +35,7 @@
           <input type="date" name="" id="date-return">
         </div>
         <div class="hero__form-box">
-          <input type="submit" name="" id="submit" class="hero__form-btn">
+          <input type="submit" name="" id="submit" class="hero__form-btn" onclick="return Client.performAction(event)" onsubmit="return Client.performAction(event)">
         </div>
       </form>
     </div>
