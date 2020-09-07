@@ -17,8 +17,6 @@ module.exports = {
     mode: 'production',
     devtool: 'source-map',
     stats: 'verbose',
-    libraryTarget: 'var',
-    library: 'Client',
     module: {
         rules: [
             {
