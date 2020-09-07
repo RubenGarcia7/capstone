@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 const dotenv = require('dotenv');
 dotenv.config();
 
-const PORT = process.env.PORT || 8081
+// const PORT = process.env.PORT || 8081
 
 //Set up environment variables
 
@@ -31,17 +31,19 @@ app.use(bodyParser.json())
 const cors = require('cors')
 app.use(cors())
 
-// designates what port the app will listen to for incoming requests
-app.listen(PORT, function (err) {
-  if (err) {
-    console.log('there was a problem', err)
-    return
-  }
-  console.log(`App working and listening on ${PORT}`)
-})
+module.exports = app
 
-app.get('/test', function (req, res) {
-  res.send('Hello')
+// designates what port the app will listen to for incoming requests
+// app.listen(PORT, function (err) {
+//   if (err) {
+//     console.log('there was a problem', err)
+//     return
+//   }
+//   console.log(`App working and listening on ${PORT}`)
+// })
+
+app.get('/test', async (req, res) => {
+    res.json({message: 'Hello'})
 })
 
 

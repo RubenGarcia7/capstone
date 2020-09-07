@@ -277,6 +277,12 @@ span {
             color: #fff;
             background-color: #f91942;
             border: 1px solid #f91942;
+            transition: all .2s;
+
+            &:hover {
+              background-color: #ea0630;
+              border: 1px solid #ea0630;
+            } 
 
             @include respond(tab-port) {
               margin-top: 1rem;
