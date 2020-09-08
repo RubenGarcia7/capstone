@@ -1,8 +1,13 @@
-import { validateForm } from '../formValidation';
+import {
+  form
+} from '../variables';
+
+// import { validateForm } from '../formValidation';
+import { addEventListener } from '../formExecution';
 
 describe("Testing the submit functionality", () => {
-  test("Testing the handleSubmit() function", () => {
-    // Check that the function exists
-    expect(validateForm()).toBeDefined();
+  test("Testing the addEventListener function", () => {
+    // Check that the event listener exists
+    expect(addEventListener()).toBeDefined();
   })
 });

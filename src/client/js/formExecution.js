@@ -1,29 +1,3 @@
-// // Form Elements
-// const destination = document.getElementById('city');
-// const dateDepart = document.getElementById('date-depart');
-// const dateReturn = document.getElementById('date-return');
-// const countryList = document.getElementById('countries');
-// const form = document.getElementById('form');
-
-// // UI Elements
-// const countdownUI = document.getElementById('countdown');
-// const cityUI = document.getElementById('city-span');
-
-// const weatherCity = document.getElementById('weather-city');
-// const weatherDate = document.getElementById('weather-date');
-// const weatherTitle = document.getElementById('weather-title');
-// const weatherMaxTemp = document.getElementById('weather-maxtemp');
-// const weatherMinTemp = document.getElementById('weather-mintemp');
-// const weatherImg = document.getElementById('weather-img');
-// const cityImg = document.getElementById('city-img');
-// const weatherDurHeading = document.getElementById('weather-dur-heading');
-// const weatherDurValue = document.getElementById('weather-dur-value');
-
-
-// Other Global Variables
-// export let differenceDaysDep;
-// export let tripDuration;
-
 import {
   destination,
   dateDepart,
@@ -32,6 +6,7 @@ import {
   cityUI,
   countdownUI,
   weatherCity,
+  form,
   weatherDate,
   weatherTitle,
   weatherMaxTemp,
@@ -41,12 +16,16 @@ import {
   differenceDaysDep
 } from './variables'
 
-// document.addEventListener('submit', performAction);
+
+export function addEventListener () {
+  
+  form.addEventListener('submit', performAction);
+}
 
 // Function triggered after submiting the form
-export function performAction(event) {
-  event.preventDefault();
-
+export function performAction(e) {
+  e.preventDefault();
+  console.log(form)
   const userDestination = destination.value;
   const userDateDepart = dateDepart.value;
   const userDateReturn = dateReturn.value;

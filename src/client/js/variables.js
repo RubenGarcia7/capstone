@@ -22,3 +22,4 @@ export const weatherDurHeading = document.getElementById('weather-dur-heading');
 export const weatherDurValue = document.getElementById('weather-dur-value');
 
 export let differenceDaysDep;
+

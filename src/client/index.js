@@ -2,17 +2,15 @@
 import './styles/main.scss';
 
 // Import JS files
-import {
-  performAction
-} from './js/formExecution';
-import {
-  validateForm
-} from './js/formValidation';
+import { performAction, addEventListener } from './js/formExecution';
+import { validateForm } from './js/formValidation';
 
+addEventListener();
 
 export {
   performAction,
-  validateForm
+  validateForm,
+  addEventListener
 }
 
 

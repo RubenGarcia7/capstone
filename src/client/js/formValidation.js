@@ -3,7 +3,8 @@ import {
   countdownUIText1,
   countdownUIText2,
   weatherDurHeading,
-  weatherDurValue
+  weatherDurValue,
+  differenceDaysDep
 } from './variables'
 
 // Validate Form
@@ -58,4 +59,9 @@ export function validateForm(userDestination, userDateDepart, userDateReturn, di
     weatherDurHeading.style.display = 'block';
     weatherDurValue.innerHTML = differenceDaysDur + ' Days';
   }
+}
+
+// Test Function
+export function sayHello() {
+  return 'Hello';
 }
