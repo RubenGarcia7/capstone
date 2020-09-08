@@ -5,23 +5,23 @@ const fetch = require('node-fetch')
 const dotenv = require('dotenv');
 dotenv.config();
 
-// const PORT = process.env.PORT || 8081
-
 //Set up environment variables
-
 const app = express()
 
 app.use(express.static('dist'))
 
+
+// Home route
 app.get('/', function (req, res) {
   res.sendFile('dist/index.html')
 })
 
+
 /* Dependencies */
 const bodyParser = require('body-parser')
 
+
 /* Middleware*/
-//Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({
   extended: false
 }))
@@ -31,7 +31,10 @@ app.use(bodyParser.json())
 const cors = require('cors')
 app.use(cors())
 
+
+// Exporting app to allow Jest endpoint test
 module.exports = app
+
 
 // API Keys Object
 const apiKeys = {
@@ -39,6 +42,7 @@ const apiKeys = {
   weatherbit: process.env.WEATHER_KEY,
   pixabay: process.env.PIXABAY_KEY
 }
+
 
 // Test Route
 app.get('/test', async (req, res) => {
@@ -65,7 +69,6 @@ app.get('/city/:country/:city', (req, res) => {
       console.log(err);
     })
 })
-// http://api.geonames.org/search?name=London&country=GB&maxRows=10&username=rubengar97
 
 
 // Weatherbit API

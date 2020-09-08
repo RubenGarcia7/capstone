@@ -254,7 +254,7 @@ span {
           font-size: 1.6rem;
           border-radius: .5rem;
           border: 0;
-
+          
 
           &[type=text],
           &[type=date] {
@@ -294,6 +294,19 @@ span {
             }
           }
         }
+
+        // #city {
+        //   padding: 1.2rem 0 1.2rem 1.5rem !important;
+        //   min-width: 15rem !important;
+
+        //   @include respond(tab-port) {
+        //     width: 50% !important;
+        //   }
+
+        //   @include respond(phone) {
+        //     width: 70% !important;
+        //   }
+        // }
 
         select {
           font-size: 1.4rem;
@@ -430,3 +443,4 @@ span {
     margin-top: 3rem;
   }
 }
+

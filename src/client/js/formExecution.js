@@ -25,23 +25,44 @@ export function addEventListener () {
 // Function triggered after submiting the form
 export function performAction(e) {
   e.preventDefault();
-  console.log(form)
+  
+  // Get user variables
   const userDestination = destination.value;
   const userDateDepart = dateDepart.value;
   const userDateReturn = dateReturn.value;
   const userCountry = countryList.value;
 
+  // Validate form and update UI
   Client.validateForm(userDestination, userDateDepart, userDateReturn, differenceDaysDep);
 
+  // Get the number of days until departure
   const daysToDepart = countdownUI.innerHTML;
 
+  // API call chain
   getCityData(userCountry, userDestination, userDateDepart)
     .then(geoData => getWeatherData(geoData, userDateDepart, daysToDepart))
     .then(newData => getImgData(newData));
-
 }
 
 
+
+// Get city data
+export const getCityData = async (userCountry, userDestination, userDateDepart) => {
+
+  try {
+    const res = await fetch(`http://localhost:8081/city/${userCountry}/${userDestination}`);
+    const data = await res.json();
+
+    // Update UI
+    cityUI.innerHTML = data.geonames[0].name;
+    return data;
+
+  } catch (error) {
+    console.log(`Something went wrong: ${error}`);
+  }
+};
+
+// Get weather data
 export const getWeatherData = async (geoData, userDateDepart, daysToDepart) => {
   console.log(geoData);
 
@@ -51,43 +72,27 @@ export const getWeatherData = async (geoData, userDateDepart, daysToDepart) => {
   try {
     const res = await fetch(`http://localhost:8081/weather/${lat}/${lon}`);
     const data = await res.json();
-    console.log(data.data[daysToDepart]);
 
-    // Update UI
-    const city = data.city_name;
+      console.log(data);
 
-    weatherCity.innerHTML = city + ', ' + data.country_code;
-    weatherDate.innerHTML = userDateDepart.split('-').reverse().join('/');
-    weatherMaxTemp.innerHTML = data.data[daysToDepart].max_temp + '°C';
-    weatherMinTemp.innerHTML = data.data[daysToDepart].min_temp + '°C';
-    weatherTitle.innerHTML = data.data[daysToDepart].weather.description;
-    weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[daysToDepart].weather.icon}.png`
+      // Update UI
+      const city = data.city_name;
+      weatherCity.innerHTML = city + ', ' + data.country_code;
+      weatherDate.innerHTML = userDateDepart.split('-').reverse().join('/');
+      weatherMaxTemp.innerHTML = data.data[daysToDepart].max_temp + '°C';
+      weatherMinTemp.innerHTML = data.data[daysToDepart].min_temp + '°C';
+      weatherTitle.innerHTML = data.data[daysToDepart].weather.description;
+      weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[daysToDepart].weather.icon}.png`
 
-    return data;
-
+      return data;
+    
   } catch (error) {
     console.log(`Something went wrong: ${error}`);
   }
 
 };
 
-// Fetch text data from API
-export const getCityData = async (userCountry, userDestination, userDateDepart) => {
-
-  try {
-    const res = await fetch(`http://localhost:8081/city/${userCountry}/${userDestination}`);
-    const data = await res.json();
-
-    // Update UI
-    cityUI.innerHTML = data.geonames[0].name;
-
-    return data;
-
-  } catch (error) {
-    console.log(`Something went wrong: ${error}`);
-  }
-};
-
+// Get img data
 export const getImgData = async (newData) => {
 
   const city = newData.city_name;
@@ -99,7 +104,6 @@ export const getImgData = async (newData) => {
 
     // Get img url from JSON response
     const imgURL = data.hits[0].webformatURL;
-    console.log(imgURL);
 
     // Update UI
     cityImg.src = imgURL;

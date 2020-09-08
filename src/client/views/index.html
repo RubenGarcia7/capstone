@@ -10,13 +10,13 @@
 <body>
   <section class="hero-section">
     <div class="hero">
-      <h1 class="hero__heading">Where are you going next?</h1>
-      <p class="hero__subheading">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi porro sapiente illo
-        dolore autem mollitia.</p>
+      <h1 class="hero__heading">Where are you travelling next?</h1>
+      <p class="hero__subheading">Enter your desired destination along with your departure and return dates below.</p>
       <form class="hero__form" id="form" >
         <div class=" hero__form-box">
         <label for="city">Destination</label>
-        <input type="text" id="city" placeholder="Name of the city">
+        <input type="text" id="city" placeholder="Name of the city" style="padding: 1.2rem 0 1.2rem 1.5rem !important;
+          min-width: 15rem !important">
     </div>
     <div class="hero__form-box">
       <label for="date-depart">Country</label>
@@ -28,11 +28,11 @@
     </div>
     <div class="hero__form-box">
       <label for="date-depart">Depart</label>
-      <input type="date" name="" id="date-depart">
+      <input type="date" name="" id="date-depart" required>
     </div>
     <div class="hero__form-box">
       <label for="date-return">Return</label>
-      <input type="date" name="" id="date-return">
+      <input type="date" name="" id="date-return" required>
     </div>
     <div class="hero__form-box">
       <input type="submit" name="" id="submit" class="hero__form-btn" 

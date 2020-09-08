@@ -9,10 +9,11 @@ import {
 
 // Validate Form
 export function validateForm(userDestination, userDateDepart, userDateReturn, differenceDaysDep) {
-
+ 
+  // Validate that the user enters a destination
   if (userDestination === '' || userDestination === null) {
     alert('Please add your destination');
-    return;
+    return false;
   } 
 
   // Get today's date
@@ -37,7 +38,9 @@ export function validateForm(userDestination, userDateDepart, userDateReturn, di
   // Make sure the date entered is in the future
   if (differenceDaysDep <= 0) {
     alert('Please select a future date');
-    return;
+    return false;
+
+    // Display "day" or "days" depending on the number
   } else if (differenceDaysDep === 1) {
     countdownUI.innerHTML = `${differenceDaysDep}`;
     countdownUIText2.style.display = 'none';
@@ -49,9 +52,12 @@ export function validateForm(userDestination, userDateDepart, userDateReturn, di
     countdownUIText2.style.display = 'inline-block';
   }
 
+  // Make sure the return date is after the departure date 
   if (differenceDaysDur <= 0) {
     alert('Please retype your return date');
     return;
+
+  // Display "day" or "days" depending on the number
   } else if (differenceDaysDur === 1) {
     weatherDurHeading.style.display = 'block';
     weatherDurValue.innerHTML = differenceDaysDur + ' Day';
