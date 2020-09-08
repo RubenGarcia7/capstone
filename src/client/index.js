@@ -13,6 +13,3 @@ export {
   addEventListener
 }
 
-
-
-// console.log(globals.differenceDaysDep, globals.tripDuration);

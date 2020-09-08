@@ -33,15 +33,14 @@ app.use(cors())
 
 module.exports = app
 
-// designates what port the app will listen to for incoming requests
-// app.listen(PORT, function (err) {
-//   if (err) {
-//     console.log('there was a problem', err)
-//     return
-//   }
-//   console.log(`App working and listening on ${PORT}`)
-// })
+// API Keys Object
+const apiKeys = {
+  geonames: process.env.GEONAMES_USER,
+  weatherbit: process.env.WEATHER_KEY,
+  pixabay: process.env.PIXABAY_KEY
+}
 
+// Test Route
 app.get('/test', async (req, res) => {
     res.json({message: 'Hello'})
 })
@@ -49,7 +48,7 @@ app.get('/test', async (req, res) => {
 
 // Geonames API
 app.get('/city/:country/:city', (req, res) => {
-  const username = process.env.GEONAMES_USER;
+  const username = apiKeys.geonames;
   const baseURL = 'http://api.geonames.org/';
   const rows = 1;
 
@@ -71,7 +70,7 @@ app.get('/city/:country/:city', (req, res) => {
 
 // Weatherbit API
 app.get('/weather/:lat/:lon', (req, res) => {
-  const weatherKey = process.env.WEATHER_KEY;
+  const weatherKey = apiKeys.weatherbit;
   const baseURL = 'https://api.weatherbit.io/v2.0/forecast/daily?';
 
   const lat = req.params.lat;
@@ -90,7 +89,7 @@ app.get('/weather/:lat/:lon', (req, res) => {
 
 // Pixabay API
 app.get('/img/:city', (req, res) => {
-  const pixabayKey = process.env.PIXABAY_KEY;
+  const pixabayKey = apiKeys.pixabay;
   const baseURL = 'https://pixabay.com/api/';
 
   const city = req.params.city;
