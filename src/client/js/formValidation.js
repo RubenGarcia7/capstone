@@ -1,5 +1,13 @@
+import {
+  countdownUI,
+  countdownUIText1,
+  countdownUIText2,
+  weatherDurHeading,
+  weatherDurValue
+} from './variables'
+
 // Validate Form
-export function validateForm(userDestination, userDateDepart, userDateReturn) {
+export function validateForm(userDestination, userDateDepart, userDateReturn, differenceDaysDep) {
 
   if (userDestination === '' || userDestination === null) {
     alert('Please add your destination');
@@ -30,11 +38,15 @@ export function validateForm(userDestination, userDateDepart, userDateReturn) {
     alert('Please select a future date');
     return;
   } else if (differenceDaysDep === 1) {
-    countdownUI.innerHTML = `${differenceDaysDep} day left`
+    countdownUI.innerHTML = `${differenceDaysDep}`;
+    countdownUIText2.style.display = 'none';
+    countdownUIText1.style.display = 'inline-block';
+    
   } else {
-    countdownUI.innerHTML = `${differenceDaysDep} days left`
+    countdownUI.innerHTML = `${differenceDaysDep}`;
+    countdownUIText1.style.display = 'none';
+    countdownUIText2.style.display = 'inline-block';
   }
-
 
   if (differenceDaysDur <= 0) {
     alert('Please retype your return date');

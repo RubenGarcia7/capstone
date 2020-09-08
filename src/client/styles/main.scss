@@ -348,7 +348,18 @@ span {
         }
       }
 
-      &-timer {}
+      &-timer {
+
+        #countdown-text-1 {
+          display: none;
+          margin-left: .5rem;
+        }
+
+        #countdown-text-2 {
+          display: none;
+          margin-left: .5rem;
+        }
+      }
 
       &-img {
         width: 80%;

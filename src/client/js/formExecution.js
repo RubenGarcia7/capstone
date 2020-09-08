@@ -1,28 +1,45 @@
-// Form Elements
-const destination = document.getElementById('city');
-const dateDepart = document.getElementById('date-depart');
-const dateReturn = document.getElementById('date-return');
-const countryList = document.getElementById('countries');
-const form = document.getElementById('form');
+// // Form Elements
+// const destination = document.getElementById('city');
+// const dateDepart = document.getElementById('date-depart');
+// const dateReturn = document.getElementById('date-return');
+// const countryList = document.getElementById('countries');
+// const form = document.getElementById('form');
 
-// UI Elements
-const countdownUI = document.getElementById('countdown');
-const cityUI = document.getElementById('city-span');
+// // UI Elements
+// const countdownUI = document.getElementById('countdown');
+// const cityUI = document.getElementById('city-span');
 
-const weatherCity = document.getElementById('weather-city');
-const weatherDate = document.getElementById('weather-date');
-const weatherTitle = document.getElementById('weather-title');
-const weatherMaxTemp = document.getElementById('weather-maxtemp');
-const weatherMinTemp = document.getElementById('weather-mintemp');
-const weatherImg = document.getElementById('weather-img');
-const cityImg = document.getElementById('city-img');
-const weatherDurHeading = document.getElementById('weather-dur-heading');
-const weatherDurValue = document.getElementById('weather-dur-value');
+// const weatherCity = document.getElementById('weather-city');
+// const weatherDate = document.getElementById('weather-date');
+// const weatherTitle = document.getElementById('weather-title');
+// const weatherMaxTemp = document.getElementById('weather-maxtemp');
+// const weatherMinTemp = document.getElementById('weather-mintemp');
+// const weatherImg = document.getElementById('weather-img');
+// const cityImg = document.getElementById('city-img');
+// const weatherDurHeading = document.getElementById('weather-dur-heading');
+// const weatherDurValue = document.getElementById('weather-dur-value');
 
 
 // Other Global Variables
-export let differenceDaysDep;
-export let tripDuration;
+// export let differenceDaysDep;
+// export let tripDuration;
+
+import {
+  destination,
+  dateDepart,
+  dateReturn,
+  countryList,
+  cityUI,
+  countdownUI,
+  weatherCity,
+  weatherDate,
+  weatherTitle,
+  weatherMaxTemp,
+  weatherMinTemp,
+  weatherImg,
+  cityImg,
+  differenceDaysDep
+} from './variables'
 
 // document.addEventListener('submit', performAction);
 
@@ -35,16 +52,18 @@ export function performAction(event) {
   const userDateReturn = dateReturn.value;
   const userCountry = countryList.value;
 
-  Client.validateForm(userDestination, userDateDepart, userDateReturn);
+  Client.validateForm(userDestination, userDateDepart, userDateReturn, differenceDaysDep);
+
+  const daysToDepart = countdownUI.innerHTML;
 
   getCityData(userCountry, userDestination, userDateDepart)
-    .then(geoData => getWeatherData(geoData, userDateDepart))
+    .then(geoData => getWeatherData(geoData, userDateDepart, daysToDepart))
     .then(newData => getImgData(newData));
 
 }
 
 
-export const getWeatherData = async (geoData, userDateDepart) => {
+export const getWeatherData = async (geoData, userDateDepart, daysToDepart) => {
   console.log(geoData);
 
   const lat = geoData.geonames[0].lat;
@@ -53,17 +72,17 @@ export const getWeatherData = async (geoData, userDateDepart) => {
   try {
     const res = await fetch(`http://localhost:8081/weather/${lat}/${lon}`);
     const data = await res.json();
-    console.log(data.data[differenceDaysDep]);
+    console.log(data.data[daysToDepart]);
 
     // Update UI
     const city = data.city_name;
 
     weatherCity.innerHTML = city + ', ' + data.country_code;
     weatherDate.innerHTML = userDateDepart.split('-').reverse().join('/');
-    weatherMaxTemp.innerHTML = data.data[differenceDaysDep].max_temp + '°C';
-    weatherMinTemp.innerHTML = data.data[differenceDaysDep].min_temp + '°C';
-    weatherTitle.innerHTML = data.data[differenceDaysDep].weather.description;
-    weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[differenceDaysDep].weather.icon}.png`
+    weatherMaxTemp.innerHTML = data.data[daysToDepart].max_temp + '°C';
+    weatherMinTemp.innerHTML = data.data[daysToDepart].min_temp + '°C';
+    weatherTitle.innerHTML = data.data[daysToDepart].weather.description;
+    weatherImg.src = `https://www.weatherbit.io/static/img/icons/${data.data[daysToDepart].weather.icon}.png`
 
     return data;
 
@@ -82,7 +101,6 @@ export const getCityData = async (userCountry, userDestination, userDateDepart) 
 
     // Update UI
     cityUI.innerHTML = data.geonames[0].name;
-
 
     return data;
 
